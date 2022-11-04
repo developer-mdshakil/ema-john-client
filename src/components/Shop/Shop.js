@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { addToDb, deleteShoppingCart, getStoredCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
 
 const Shop = () => {
-    const {products, count} = useLoaderData();
+    const [products, setProducts] = useState([]);
+    const [count, setCount] = useState(0);
     const [cart, setCart] = useState([]);
 
     const[page, setPage] = useState(0);
@@ -18,6 +19,16 @@ const Shop = () => {
         setCart([]);
         deleteShoppingCart();
     }
+
+    useEffect( ()=> {
+        const url = `http://localhost:5000/products?page=${page}&size=${size}`
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            setCount(data.count)
+            setProducts(data.products)
+        })
+    }, [page, size])
 
     useEffect( () =>{
         const storedCart = getStoredCart();
@@ -76,7 +87,7 @@ const Shop = () => {
                  className={page === number && 'selected'}
                 key={number}
                 onClick={()=> setPage(number)}
-                >{number}</button>)
+                >{number + 1}</button>)
             }
             <select onChange={event => setSize(event.target.value)}>
                 <option value="5">5</option>
