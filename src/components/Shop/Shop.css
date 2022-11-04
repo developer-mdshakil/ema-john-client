@@ -11,6 +11,22 @@
 .cart-container{
     background-color: rgba(255, 153, 0, 0.3);
 }
+.pagination{
+    margin: 0  auto 3rem;
+}
+.pagination button{
+    margin: 0 1rem;
+    padding: 0.8rem;
+    cursor: pointer;
+    background: blue;
+    color: white;
+    border: none;
+    font-size: 1rem;
+}
+.pagination .selected{
+    background: red;
+}
+
 @media screen and (max-width:1100px) {
     .products-container{
         grid-template-columns: repeat(2, 1fr);
